@@ -1,28 +1,33 @@
+using Tomlyn;
+using Tomlyn.Model;
+
 namespace FileOrganiserSuccession
 {
     public partial class Form1 : Form
     {
-        private readonly string[] filePath = Directory.GetFiles(Environment.CurrentDirectory);
-        
-        // Source: https://www.computerhope.com/issues/ch001789.htm
-        private readonly Dictionary<string, string[]> _fileTypes = new()
-        {
-            { "audio", ["aif", "cda", "mid", "midi", "mp3", "mpa", "ogg", "wav", "wma", "wpl"] },
-            { "compressed", ["7z", "arj", "deb", "pkg", "rar", "rpm", "tar", "gz", "z", "zip"] },
-            { "image", ["ai", "bmp", "gif", "ico", "jpeg", "jpg", "png", "ps", "psd", "scr", "svg", "tif", "tiff", "webp"] }
-        };
+        private readonly string[] _filePath = Directory.GetFiles(Environment.CurrentDirectory);
+        private readonly TomlTable _fileTypes;
         
         public Form1()
         {
             InitializeComponent();
-            lblFileCount.Text = $"Detected: {filePath.Length} files";
+            lblFileCount.Text = $"Detected: {_filePath.Length} files";
+            _fileTypes = Toml.Parse(File.ReadAllText("file_mappings.toml")).ToModel();
         }
 
         private void btnOrganise_Click(object sender, EventArgs e)
         {
-            foreach (string file in filePath)
+            foreach (string fileType in _fileTypes.Keys)
             {
-                Console.WriteLine(file);
+                // WHAT DOES THIS MEAN AI
+                if (_fileTypes.TryGetValue(fileType, out var tomlArray1) && tomlArray1 is TomlArray fileExtensions)
+                {
+                    Console.WriteLine($"{fileType}:");
+                    foreach (var extension in fileExtensions)
+                    {
+                        Console.WriteLine(extension);
+                    }
+                }
             }
         }
     }

@@ -1,0 +1,4 @@
+# Source: https://www.computerhope.com/issues/ch001789.htm
+audio = ["aif", "cda", "mid", "midi", "mp3", "mpa", "ogg", "wav", "wma", "wpl"]
+compressed = ["7z", "arj", "deb", "pkg", "rar", "rpm", "tar", "gz", "z", "zip"]
+image = ["ai", "bmp", "gif", "ico", "jpeg", "jpg", "png", "ps", "psd", "scr", "svg", "tif", "tiff", "webp"]
